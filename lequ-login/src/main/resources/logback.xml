@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 second" debug="false">
+    <property resource="application.properties"/>
+    <substitutionProperty name="PROJECT_NAME" value="restful"/>
+    <substitutionProperty name="LOG_HOME" value="${catalina.base}/logs"/>
+
+    <property name="pattern" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] %logger{0}-%L %msg%n"></property>
+    <timestamp key="byDate" datePattern="yyyyMMdd" timeReference="contextBirth"/>
+
+    <!-- 负责写日志,控制台日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern >${pattern}</pattern>
+            <immediateFlush>true</immediateFlush>
+        </encoder>
+    </appender>
+
+    <!-- 文件日志 -->
+    <appender name="loginRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/lequ-login.log</file>
+        <!--如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true-->
+        <append>false</append>
+        <!--日志会被安全的写入文件-->
+        <prudent>false</prudent>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>UTF-8</charset>
+            <!--<immediateFlush>true</immediateFlush>-->
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/lequ-login.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--
+    - 1.name：包名或类名，用来指定受此logger约束的某一个包或者具体的某一个类
+    - 2.未设置打印级别，所以继承他的上级<root>的日志级别“DEBUG”
+    - 3.未设置additivity，默认为true，将此logger的打印信息向上级传递；
+    - 4.未设置appender，此logger本身不打印任何信息，级别为“DEBUG”及大于“DEBUG”的日志信息传递给root，
+    -  root接到下级传递的信息，交给已经配置好的名为“STDOUT”的appender处理，“STDOUT”appender将信息打印到控制台；
+    -->
+
+
+    <!--dubbo-->
+    <logger name="com.alibaba.dubbo" level="WARN"></logger>
+    <!--spring-->
+    <logger name="org.springframework" level="WARN"></logger>
+    <!--logback-->
+    <logger name="ch.qos.logback" level="WARN"></logger>
+    <logger name="org.apache.zookeeper" level="WARN"></logger>
+
+     <logger name="org.springframework" level="ERROR" />
+	<logger name="com.taobao.diamond" level="ERROR" />
+	<logger name="org.apache" level="ERROR" />
+	<logger name="org.apache.cxf" level="INFO" />
+	<logger name="com.alibaba.dubbo" level="ERROR" />
+	<logger name="com.gome.track" level="ERROR" />
+	<logger name="com.gome.architect.idgnrt" level="ERROR" />
+	<logger name="com.ibatis" level="debug" />
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="debug" />
+	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="debug" />
+	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="debug" />
+
+	<logger name="java.sql.PreparedStatement" level="debug" />
+	<logger name="java.sql.Statement" level="debug" />
+	<logger name="java.sql.ResultSet" level="debug" />
+	<logger name="java.sql.Connection" level="debug" />
+	
+	<logger name="httpclient.wire" level="INFO" />
+	<logger name="httpclient.wire.header" level="INFO" />
+	<logger name="org.apache.commons.httpclient" level="INFO" />
+	
+    <logger name="com.alibaba.druid.filter.stat.StatFilter" level="ERROR"></logger>
+
+    <logger name="com.ycdz.mapper" level="DEBUG" additivity="false"></logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="loginRolling"/>
+    </root>
+
+</configuration>

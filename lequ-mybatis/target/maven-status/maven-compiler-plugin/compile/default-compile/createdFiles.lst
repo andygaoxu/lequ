@@ -1,0 +1,9 @@
+com\lequ\mybatis\MyBatisProcessor.class
+com\lequ\mybatis\common\DBContext.class
+com\lequ\mybatis\MyBatisConstants.class
+com\lequ\mybatis\annotation\MyBatisAutowired.class
+com\lequ\mybatis\spring\MyBatisSessionFactoryBean.class
+com\lequ\mybatis\annotation\MyBatisComponent.class
+com\lequ\mybatis\spring\MyBatisBeanProcessor.class
+com\lequ\mybatis\MyBatisInjected.class
+com\lequ\mybatis\MyBatisMapper.class

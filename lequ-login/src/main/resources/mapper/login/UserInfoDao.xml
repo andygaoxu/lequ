@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.login.bootstrap.dao.userinfo.UserInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lequ.login.bootstrap.model.UserInfoEntity" id="userInfoMap">
+        <result property="id" column="id"/>
+        <result property="openId" column="openid"/>
+        <result property="nickName" column="nickName"/>
+        <result property="avatarUrl" column="avatarUrl"/>
+        <result property="gender" column="gender"/>
+        <result property="city" column="city"/>
+        <result property="province" column="province"/>
+         <result property="country" column="country"/>
+         <result property="language" column="language"/>
+         <result property="createDate" column="createDate"/>
+         <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+	<insert id="insert" parameterType="com.lequ.login.bootstrap.model.UserInfoEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into userInfo
+		(
+			`openid`, 
+			`nickName`, 
+			`avatarUrl`, 
+			`gender`, 
+			`city`, 
+			`province`, 
+			`country`, 
+			`language`, 
+			`createDate`
+		)
+		values
+		(
+			#{openId}, 
+			#{nickName}, 
+			#{avatarUrl}, 
+			#{gender}, 
+			#{city}, 
+			#{province}, 
+			#{country}, 
+			#{language}, 
+			#{createDate}
+		)
+	</insert>
+	<select id="queryTotal" resultType="int">
+		select count(*) from userInfo 
+	</select>
+	<select id="queryObject" resultType="com.lequ.login.bootstrap.model.UserInfoEntity">
+		select * from userInfo where openid = #{value}
+	</select>
+	<update id="update" parameterType="com.lequ.login.bootstrap.model.UserInfoEntity">
+		update userInfo 
+		<set>
+			<if test="openId != null">`openid` = #{openId}, </if>
+			<if test="nickName != null">`nickName` = #{nickName}, </if>
+			<if test="avatarUrl != null">`avatarUrl` = #{avatarUrl}, </if>
+			<if test="gender != null">`gender` = #{gender}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="country != null">`country` = #{country}, </if>
+			<if test="language != null">`language` = #{language}, </if>
+			<if test="updateTime != null">`updateTime` = #{updateTime}</if>
+		</set>
+		where openid = #{openId}
+	</update>
+	<delete id="delete">
+		delete from userInfo where openid = #{openId}
+	</delete>
+	
+</mapper>

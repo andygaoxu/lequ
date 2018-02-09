@@ -1,0 +1,15 @@
+com\lequ\login\bootstrap\service\WeiXinService.class
+com\lequ\login\bootstrap\web\WeiXinLoginCLR.class
+com\lequ\login\bootstrap\model\UserInfoEntity.class
+com\lequ\login\bootstrap\weixin\WeiXinConstant.class
+com\lequ\login\bootstrap\dao\userinfo\UserInfoDao.class
+com\lequ\login\bootstrap\weixin\WeiXinApiService.class
+com\lequ\login\bootstrap\weixin\WeiXinHttpResult.class
+com\lequ\login\bootstrap\weixin\EncryptedData.class
+com\lequ\login\bootstrap\weixin\DecryptedData.class
+com\lequ\login\bootstrap\service\LoginService.class
+com\lequ\login\bootstrap\model\CommonRequestObject.class
+com\lequ\login\bootstrap\util\AES128Util.class
+com\lequ\login\bootstrap\weixin\Watermark.class
+com\lequ\login\bootstrap\dao\BaseDao.class
+com\lequ\login\bootstrap\weixin\WeiXinServerLoginResult.class
