@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.server.bootstrap.dao.sendpacket.SendPacketStatDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lequ.server.bootstrap.model.SendPacketStatEntity" id="sendPacketStatMap">
+        <result property="id" column="id"/>
+        <result property="openId" column="openid"/>
+        <result property="totalAmount" column="totalAmount"/>
+        <result property="totalNumber" column="totalNumber"/>
+    </resultMap>
+
+	<insert id="insert" parameterType="com.lequ.server.bootstrap.model.SendPacketStatEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into send_packet_stat
+		(
+			`openid`, 
+			`totalAmount`, 
+			`totalNumber`
+		)
+		values
+		(
+			#{openId}, 
+			#{totalAmount}, 
+			#{totalNumber}
+
+		)
+	</insert>
+
+	<select id="queryObject" resultType="com.lequ.server.bootstrap.model.SendPacketStatEntity">
+		select * from send_packet_stat where openid = #{openId}
+	</select>
+
+	<update id="update" parameterType="com.lequ.server.bootstrap.model.SendPacketStatEntity">
+		update send_packet_stat 
+		<set>
+			<if test="openId != null">`openid` = #{openId}, </if>
+			<if test="totalAmount != null">`totalAmount` = #{totalAmount}, </if>
+			<if test="totalNumber != null">`totalNumber` = #{totalNumber}, </if>
+		</set>
+		where openid = #{openId}
+	</update>
+	<delete id="delete">
+		delete from send_packet_stat where id = #{id}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.server.bootstrap.dao.packet.PacketContentDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.lequ.server.bootstrap.model.PacketContentEntity"
+		id="packetContentMap">
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="numberWords" column="numberWords" />
+		<result property="number" column="number" />
+		<result property="creatTime" column="creatTime" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.lequ.server.bootstrap.model.PacketContentEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into packet_content
+		(
+		`content`,
+		`numberWords`,
+		`number`,
+		`creatTime`
+		)
+		values
+		(
+		#{content},
+		#{numberWords},
+		#{number},
+		#{creatTime}
+
+		)
+	</insert>
+
+	<select id="queryTotal" resultType="int">
+		select count(#{value}) from
+		packet_content
+	</select>
+	<select id="queryObject" resultType="com.lequ.server.bootstrap.model.PacketContentEntity">
+		select * from packet_content where id = #{id} 
+	</select>
+	<select id="queryList" resultType="com.lequ.server.bootstrap.model.PacketContentEntity">
+		select content from packet_content  order by id desc limit 10
+	</select>
+
+	<delete id="delete">
+		delete from packet_content where id = #{id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.server.bootstrap.dao.packet.PacketSplitDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.lequ.server.bootstrap.model.PacketSplitEntity"
+		id="packetSplitMap">
+		<result property="packetId" column="packetId" />
+		<result property="amount" column="amount" />
+		<result property="splitId" column="splitId" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.lequ.server.bootstrap.model.PacketSplitEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into packet_split
+		(
+		`packetId`,
+		`amount`,
+		`splitId`
+		)
+		values
+		(
+		#{packetId},
+		#{amount},
+		#{splitId}
+
+		)
+	</insert>
+
+	<insert id="insertByBatch" parameterType="java.util.List">
+
+		INSERT INTO packet_split(
+		`packetId`,
+		`amount`,
+		`splitId`
+		)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.packetId},#{item.amount},#{item.splitId})
+		</foreach>
+	</insert>
+
+	<select id="queryTotal" resultType="int">
+		select count(#{value}) from
+		packet_split
+	</select>
+	<select id="queryObjectByPS" resultType="com.lequ.server.bootstrap.model.PacketSplitEntity">
+		select * from
+		packet_split where packetId = #{packetId} and splitId =
+		#{splitId}
+	</select>
+
+	<select id="queryList" resultType="com.lequ.server.bootstrap.model.PacketSplitEntity">
+		select * from packet_split
+		where
+		packetId = #{packetId} order by id asc
+	</select>
+
+	<delete id="delete">
+		delete from packet_split where id = #{id}
+	</delete>
+
+</mapper>

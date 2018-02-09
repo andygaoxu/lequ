@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.server.bootstrap.dao.sendpacket.SendPacketDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lequ.server.bootstrap.model.SendPacketEntity" id="sendPacketMap">
+        <result property="id" column="id"/>
+        <result property="openId" column="openid"/>
+        <result property="amount" column="amount"/>
+        <result property="number" column="number"/>
+        <result property="content" column="content"/>
+        <result property="robbedState" column="robbedState"/>
+        <result property="robbedNumber" column="robbedNumber"/>
+        <result property="createTime" column="createTime"/>
+        <result property="packetId" column="packetId"/>
+    </resultMap>
+
+	<insert id="insert" parameterType="com.lequ.server.bootstrap.model.SendPacketEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into send_packet
+		(
+			`openid`, 
+			`amount`, 
+			`number`, 
+			`content`, 
+			`robbedState`, 
+			`robbedNumber`, 
+			`packetId`, 
+			`createTime`
+		)
+		values
+		(
+			#{openId}, 
+			#{amount}, 
+			#{number}, 
+			#{content}, 
+			#{robbedState}, 
+			#{robbedNumber}, 
+			#{packetId}, 
+			#{createTime}
+
+		)
+	</insert>
+	<select id="queryTotal" resultType="int">
+		select count(#{value}) from send_packet 
+	</select>
+	<select id="queryObject" resultType="com.lequ.server.bootstrap.model.SendPacketEntity">
+		select * from send_packet where id = #{value}
+	</select>
+	
+	<select id="queryObjectByPacketId" resultType="com.lequ.server.bootstrap.model.SendPacketEntity">
+		select * from send_packet where packetId = #{packetId}
+	</select>
+	<select id="queryList" resultType="com.lequ.server.bootstrap.model.SendPacketEntity">
+		select * from send_packet  where openid = #{openId} order by id desc
+	</select>
+	
+	<update id="update" parameterType="com.lequ.server.bootstrap.model.SendPacketEntity">
+		update send_packet 
+		<set>
+		<if test="id != null">`id` = #{id}, </if>
+			<if test="openId != null">`openid` = #{openId}, </if>
+			<if test="robbedState != null">`robbedState` = #{robbedState}, </if>
+			<if test="robbedNumber != null">`robbedNumber` = #{robbedNumber}, </if>
+			<if test="packetId != null">`packetId` = #{packetId}, </if>
+		</set>
+		where packetId = #{packetId}
+	</update>
+	<delete id="delete">
+		delete from send_packet where id = #{id}
+	</delete>
+	
+</mapper>

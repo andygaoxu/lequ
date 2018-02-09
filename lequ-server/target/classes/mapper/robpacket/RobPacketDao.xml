@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.server.bootstrap.dao.robpacket.RobPacketDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.lequ.server.bootstrap.model.RobPacketEntity"
+		id="robPacketMap">
+		<result property="id" column="id" />
+		<result property="openId" column="openid" />
+		<result property="amount" column="amount" />
+		<result property="createTime" column="createTime" />
+		<result property="packetId" column="packetId" />
+		<result property="splitId" column="splitId" />
+		<result property="recorderFilePath" column="recorderFilePath" />
+		<result property="nickName" column="nickName" />
+		<result property="avatarUrl" column="avatarUrl" />
+		<result property="gender" column="gender" />
+		<result property="province" column="province" />
+		<result property="country" column="country" />
+		<result property="senderOpenId" column="senderOpenId" />
+		<result property="updateTime" column="updateTime" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.lequ.server.bootstrap.model.RobPacketEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into rob_packet
+		(
+		`openid`,
+		`amount`,
+		`packetId`,
+		`splitId`,
+		`recorderFilePath`,
+		`senderOpenId`,
+		`nickName`,
+		`avatarUrl`,
+		`gender`,
+		`province`,
+		`country`,
+		`createTime`
+		)
+		values
+		(
+		#{openId},
+		#{amount},
+		#{packetId},
+		#{splitId},
+		#{recorderFilePath},
+		#{senderOpenId},
+		#{nickName},
+		#{avatarUrl},
+		#{gender},
+		#{province},
+		#{country},
+		#{createTime}
+
+		)
+	</insert>
+
+	<select id="queryTotal" resultType="int">
+		select count(#{value}) from
+		rob_packet
+	</select>
+
+	<select id="queryObject" resultType="com.lequ.server.bootstrap.model.RobPacketEntity">
+		select * from rob_packet
+		where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.lequ.server.bootstrap.model.RobPacketEntity">
+		select * from rob_packet where
+		openid = #{openId} order by id desc
+	</select>
+
+	<select id="queryListByPacketId" resultType="com.lequ.server.bootstrap.model.RobPacketEntity">
+		select * from
+		rob_packet where packetId = #{packetId} order by id desc
+	</select>
+
+	<update id="update" parameterType="com.lequ.server.bootstrap.model.RobPacketEntity">
+		update rob_packet
+		<set>
+			<if test="senderOpenId != null">`senderOpenId` = #{senderOpenId}, </if>
+			<if test="nickName != null">`nickName` = #{nickName}, </if>
+			<if test="avatarUrl != null">`avatarUrl` = #{avatarUrl}, </if>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="country != null">`country` = #{country}, </if>
+			<if test="gender != null">`gender` = #{gender}, </if>
+			<if test="updateTime != null">`updateTime` = #{updateTime}, </if>
+		</set>
+		where senderOpenId = #{senderOpenId}
+	</update>
+	<delete id="delete">
+		delete from rob_packet where id = #{id}
+	</delete>
+
+
+
+
+</mapper>

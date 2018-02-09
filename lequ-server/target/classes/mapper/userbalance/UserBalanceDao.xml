@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.server.bootstrap.dao.userbalance.UserBalanceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.lequ.server.bootstrap.model.UserBalanceEntity"
+		id="userBalanceMap">
+		<result property="id" column="id" />
+		<result property="openId" column="openid" />
+		<result property="totalAmount" column="totalAmount" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.lequ.server.bootstrap.model.UserBalanceEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into user_balance
+		(
+		`openid`,
+		`totalAmount`
+		)
+		values
+		(
+		#{openId},
+		#{totalAmount}
+
+		)
+	</insert>
+
+	<select id="queryObject" resultType="com.lequ.server.bootstrap.model.UserBalanceEntity">
+		select * from user_balance
+		where openid = #{openId}
+	</select>
+
+
+	<update id="update" parameterType="com.lequ.server.bootstrap.model.UserBalanceEntity">
+		update user_balance
+		<set>
+			<if test="openId != null">`openid` = #{openId}, </if>
+			<if test="totalAmount != null">`totalAmount` = #{totalAmount}, </if>
+		</set>
+		where openid = #{openId}
+	</update>
+	<delete id="delete">
+		delete from user_balance where id = #{id}
+	</delete>
+
+</mapper>

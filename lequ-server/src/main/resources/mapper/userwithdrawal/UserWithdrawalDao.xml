@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.server.bootstrap.dao.userwithdrawal.UserWithdrawalDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.lequ.server.bootstrap.model.UserWithdrawalEntity"
+		id="userWithdrawalMap">
+		<result property="id" column="id" />
+		<result property="openId" column="openid" />
+		<result property="totalAmount" column="totalAmount" />
+		<result property="amount" column="amount" />
+		<result property="withdrawalState" column="withdrawalState" />
+		<result property="withdrawalStartDate" column="withdrawalStartDate" />
+		<result property="withdrawalEndDate" column="withdrawalEndDate" />
+	</resultMap>
+
+	<insert id="insert"
+		parameterType="com.lequ.server.bootstrap.model.UserWithdrawalEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into user_withdrawal
+		(
+		`openid`,
+		`totalAmount`,
+		`amount`,
+		`withdrawalState`,
+		`withdrawalStartDate`,
+		`withdrawalEndDate`
+		)
+		values
+		(
+		#{openId},
+		#{totalAmount},
+		#{amount},
+		#{withdrawalState},
+		#{withdrawalStartDate},
+		#{withdrawalEndDate}
+
+		)
+	</insert>
+	<select id="queryTotal" resultType="int">
+		select count(#{value}) from
+		user_withdrawal
+	</select>
+	<select id="queryObject"
+		resultType="com.lequ.server.bootstrap.model.UserWithdrawalEntity">
+		select * from
+		user_withdrawal
+		where id = #{id}
+	</select>
+	<select id="queryList"
+		resultType="com.lequ.server.bootstrap.model.UserWithdrawalEntity">
+		select * from user_withdrawal
+		where openid = #{openId} order
+		by
+		id desc
+	</select>
+
+	<update id="update"
+		parameterType="com.lequ.server.bootstrap.model.UserWithdrawalEntity">
+		update user_withdrawal
+		<set>
+			<if test="openId != null">`openid` = #{openId}, </if>
+			<if test="withdrawalState != null">`withdrawalState` = #{withdrawalState}, </if>
+		</set>
+		where openid = #{openId}
+	</update>
+	<delete id="delete">
+		delete from user_withdrawal where id = #{id}
+	</delete>
+
+</mapper>

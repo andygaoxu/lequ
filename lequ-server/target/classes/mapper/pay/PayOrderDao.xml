@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lequ.server.bootstrap.dao.pay.PayOrderDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lequ.server.bootstrap.model.PayOrderEntity" id="payOrderMap">
+        <result property="id" column="id"/>
+        <result property="openId" column="openid"/>
+        <result property="total_fee" column="total_fee"/>
+        <result property="out_trade_no" column="out_trade_no"/>
+        <result property="body" column="body"/>
+        <result property="time_start" column="time_start"/>
+        <result property="time_expire" column="time_expire"/>
+        <result property="pay_status" column="pay_status"/>
+    </resultMap>
+
+	<insert id="insert" parameterType="com.lequ.server.bootstrap.model.PayOrderEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into pay_order
+		(
+			`openid`, 
+			`total_fee`, 
+			`out_trade_no`, 
+			`time_start`, 
+			`pay_status`, 
+			`body`
+		)
+		values
+		(
+			#{openId}, 
+			#{total_fee}, 
+			#{out_trade_no}, 
+			#{time_start}, 
+			#{pay_status}, 
+			#{body}
+
+		)
+	</insert>
+	<select id="queryTotal" resultType="int">
+		select count(#{value}) from pay_order 
+	</select>
+	<select id="queryObject" resultType="com.lequ.server.bootstrap.model.PayOrderEntity">
+		select * from pay_order where id = #{value}
+	</select>
+	
+	<select id="queryObjectByOutTradeNo" resultType="com.lequ.server.bootstrap.model.PayOrderEntity">
+		select * from pay_order where out_trade_no = #{out_trade_no}
+	</select>
+	<select id="queryList" resultType="com.lequ.server.bootstrap.model.PayOrderEntity">
+		select * from pay_order  where openid = #{openId} order by id desc
+	</select>
+	
+	<update id="update" parameterType="com.lequ.server.bootstrap.model.PayOrderEntity">
+		update pay_order 
+		<set>
+		<if test="id != null">`id` = #{id}, </if>
+			<if test="openId != null">`openid` = #{openId}, </if>
+			<if test="out_trade_no != null">`out_trade_no` = #{out_trade_no}, </if>
+			<if test="pay_status != null">`pay_status` = #{pay_status}, </if>
+		</set>
+		where out_trade_no = #{out_trade_no}
+	</update>
+	<delete id="delete">
+		delete from pay_order where id = #{id}
+	</delete>
+	
+</mapper>
